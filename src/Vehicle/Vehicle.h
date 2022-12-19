@@ -1003,7 +1003,6 @@ private slots:
     void _gotProgressUpdate                 (float progressValue);
 
 private:
-    void _joystickChanged               (Joystick* joystick);
     void _loadSettings                  ();
     void _saveSettings                  ();
     void _startJoystick                 (bool start);
