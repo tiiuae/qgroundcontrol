@@ -213,7 +213,8 @@ Vehicle::Vehicle(LinkInterface*             link,
         }
     }
 #endif
-
+ 
+    _usspFlow = new USSPMinimalFlow(*this);
     _autopilotPlugin = _firmwarePlugin->autopilotPlugin(this);
     _autopilotPlugin->setParent(this);
 

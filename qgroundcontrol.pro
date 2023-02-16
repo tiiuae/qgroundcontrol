@@ -420,6 +420,8 @@ INCLUDEPATH += \
     src/ui/px4_configuration \
     src/ui/toolbar \
     src/ui/uas \
+    src/USSP \
+    src/USSP/services
 
 contains (DEFINES, QGC_ENABLE_PAIRING) {
     INCLUDEPATH += \
@@ -751,6 +753,7 @@ HEADERS += \
     src/uas/UASMessageHandler.h \
     src/AnalyzeView/GeoTagController.h \
     src/AnalyzeView/ExifParser.h \
+    src/USSP/USSPMinimalFlow.h \
 
 contains (DEFINES, QGC_ENABLE_PAIRING) {
     HEADERS += \
@@ -1006,6 +1009,7 @@ SOURCES += \
     src/uas/UASMessageHandler.cc \
     src/AnalyzeView/GeoTagController.cc \
     src/AnalyzeView/ExifParser.cc \
+    src/USSP/USSPMinimalFlow.cpp \
 
 contains (DEFINES, QGC_ENABLE_PAIRING) {
     SOURCES += \
@@ -1431,7 +1435,7 @@ contains (DEFINES, QGC_AIRMAP_ENABLED) {
         src/Airmap/services/telemetry.cpp \
         src/Airmap/services/traffic.cpp \
         src/Airmap/services/types.cpp \
-
+        
     #-- Do we have an API key?
     exists(src/Airmap/Airmap_api_key.h) {
         message("Using compile time Airmap API key")
@@ -1445,7 +1449,7 @@ contains (DEFINES, QGC_AIRMAP_ENABLED) {
 } else {
     #-- Dummies
     INCLUDEPATH += \
-        src/Airmap/dummy
+        src/Airmap/dummy 
     RESOURCES += \
         src/Airmap/dummy/airmap_dummy.qrc
     HEADERS += \
