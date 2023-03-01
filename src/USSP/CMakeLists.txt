@@ -2,12 +2,12 @@
 find_package(Threads REQUIRED)
 
 add_library(USSP
-	USSPMinimalFlow.cpp
-	USSPMinimalFlow.h
+	test/USSPMinimalFlow.cpp
+	test/USSPMinimalFlow.h
 	services/dispatcher.h
 )
 
-target_include_directories(USSP PUBLIC services)
+target_include_directories(USSP PUBLIC services test)
 
 target_link_libraries(USSP
 	Qt5::Core

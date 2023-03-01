@@ -421,7 +421,8 @@ INCLUDEPATH += \
     src/ui/toolbar \
     src/ui/uas \
     src/USSP \
-    src/USSP/services
+    src/USSP/services \
+    src/USSP/test
 
 contains (DEFINES, QGC_ENABLE_PAIRING) {
     INCLUDEPATH += \
@@ -753,7 +754,7 @@ HEADERS += \
     src/uas/UASMessageHandler.h \
     src/AnalyzeView/GeoTagController.h \
     src/AnalyzeView/ExifParser.h \
-    src/USSP/USSPMinimalFlow.h \
+    src/USSP/test/USSPMinimalFlow.h \
 
 contains (DEFINES, QGC_ENABLE_PAIRING) {
     HEADERS += \
@@ -1009,7 +1010,7 @@ SOURCES += \
     src/uas/UASMessageHandler.cc \
     src/AnalyzeView/GeoTagController.cc \
     src/AnalyzeView/ExifParser.cc \
-    src/USSP/USSPMinimalFlow.cpp \
+    src/USSP/test/USSPMinimalFlow.cpp \
 
 contains (DEFINES, QGC_ENABLE_PAIRING) {
     SOURCES += \
