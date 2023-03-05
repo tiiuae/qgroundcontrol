@@ -8,7 +8,7 @@
  ****************************************************************************/
 
 #pragma once
-#include "LifetimeChecker.h"
+//#include "LifetimeChecker.h"
 
 
 #include <USSP/services/dispatcher.h>
@@ -21,7 +21,7 @@
 #include <QTimer>
 #include <QDebug>
 
-class USSPMinimalFlow : public QObject, public LifetimeChecker
+class USSPMinimalFlow : public QObject
 {
     Q_OBJECT
 public:
