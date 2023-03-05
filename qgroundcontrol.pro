@@ -420,9 +420,6 @@ INCLUDEPATH += \
     src/ui/px4_configuration \
     src/ui/toolbar \
     src/ui/uas \
-    src/USSP \
-    src/USSP/services \
-    src/USSP/test
 
 contains (DEFINES, QGC_ENABLE_PAIRING) {
     INCLUDEPATH += \
@@ -753,8 +750,7 @@ HEADERS += \
     src/uas/UASInterface.h \
     src/uas/UASMessageHandler.h \
     src/AnalyzeView/GeoTagController.h \
-    src/AnalyzeView/ExifParser.h \
-    src/USSP/test/USSPMinimalFlow.h \
+    src/AnalyzeView/ExifParser.h \ 
 
 contains (DEFINES, QGC_ENABLE_PAIRING) {
     HEADERS += \
@@ -1010,7 +1006,6 @@ SOURCES += \
     src/uas/UASMessageHandler.cc \
     src/AnalyzeView/GeoTagController.cc \
     src/AnalyzeView/ExifParser.cc \
-    src/USSP/test/USSPMinimalFlow.cpp \
 
 contains (DEFINES, QGC_ENABLE_PAIRING) {
     SOURCES += \
@@ -1457,6 +1452,21 @@ contains (DEFINES, QGC_AIRMAP_ENABLED) {
         src/Airmap/dummy/AirspaceManager.h
     SOURCES += \
         src/Airmap/dummy/AirspaceManager.cc
+}
+
+contains (DEFINES, USSP_ENABLED) {
+
+    #-- To test with USSP Enabled Flag
+    INCLUDEPATH += \
+        src/USSP \
+        src/USSP/services \
+        src/USSP/test
+
+    HEADERS += \
+        src/USSP/test/USSPMinimalFlow.h \
+
+    SOURCES += \
+        src/USSP/test/USSPMinimalFlow.cpp \
 }
 
 #-------------------------------------------------------------------------------------
