@@ -49,7 +49,7 @@
 #include "HealthAndArmingCheckReport.h"
 
 #if defined(USSP_ENABLED)
-    #include "USSPMinimalFlow.h"
+    #include "USSPManager.h"
 #endif
 
 
@@ -80,7 +80,7 @@ class InitialConnectStateMachine;
 class Autotune;
 
 #if defined(USSP_ENABLED)
-    class USSPMinimalFlow;
+    class USSPVehicle;
 #endif
 
 
@@ -1169,7 +1169,7 @@ private:
 #endif
 
 #if defined(USSP_ENABLED)
-    USSPMinimalFlow* _usspFlow = nullptr;
+    USSPVehicle*                    _usspVehicle                    = nullptr;
 #endif
     
 

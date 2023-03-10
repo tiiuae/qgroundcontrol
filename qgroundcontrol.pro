@@ -8,7 +8,7 @@
 ################################################################################
 
 QMAKE_PROJECT_DEPTH = 0 # undocumented qmake flag to force absolute paths in makefiles
-
+CONFIG += object_parallel_to_source
 # These are disabled until proven correct
 DEFINES += QGC_GST_TAISYNC_DISABLED
 DEFINES += QGC_GST_MICROHARD_DISABLED
@@ -1460,13 +1460,22 @@ contains (DEFINES, USSP_ENABLED) {
     INCLUDEPATH += \
         src/USSP \
         src/USSP/services \
+        src/USSP/flightBlender \
         src/USSP/test
 
     HEADERS += \
-        src/USSP/test/USSPMinimalFlow.h \
+        src/USSP/USSPManager.h \
+        src/USSP/USSPVehicle.h \
+        src/USSP/USSPTelemetry.h \
+        src/USSP/flightBlender/telemetry.h \
+        src/USSP/flightBlender/flightID.h \
 
     SOURCES += \
-        src/USSP/test/USSPMinimalFlow.cpp \
+        src/USSP/USSPManager.cc \
+        src/USSP/USSPVehicle.cc \
+        src/USSP/USSPTelemetry.cc \
+        src/USSP/flightBlender/telemetry.cc \
+        src/USSP/flightBlender/flightID.cc \
 }
 
 #-------------------------------------------------------------------------------------

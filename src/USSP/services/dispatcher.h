@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <condition_variable>
 #include <deque>

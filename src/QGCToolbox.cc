@@ -50,6 +50,10 @@
 #include CUSTOMHEADER
 #endif
 
+#if defined(USSP_ENABLED)
+#include "USSPManager.h"
+#endif
+
 QGCToolbox::QGCToolbox(QGCApplication* app)
 {
     // SettingsManager must be first so settings are available to any subsequent tools
@@ -92,6 +96,9 @@ QGCToolbox::QGCToolbox(QGCApplication* app)
 #if defined(QGC_GST_MICROHARD_ENABLED)
     _microhardManager       = new MicrohardManager          (app, this);
 #endif
+#if defined(USSP_ENABLED)
+    _usspManager            = new USSPManager               (app, this);
+#endif
 }
 
 void QGCToolbox::setChildToolboxes(void)
@@ -128,6 +135,9 @@ void QGCToolbox::setChildToolboxes(void)
 #endif
 #if defined(QGC_ENABLE_PAIRING)
     _pairingManager->setToolbox(this);
+#endif
+#if defined(USSP_ENABLED)
+    _usspManager->setToolbox(this);
 #endif
 }
 
