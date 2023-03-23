@@ -48,6 +48,11 @@
 #include "ImageProtocolManager.h"
 #include "HealthAndArmingCheckReport.h"
 
+#if defined(USSP_ENABLED)
+    #include "USSPManager.h"
+#endif
+
+
 class Actuators;
 class EventHandler;
 class UAS;
@@ -73,6 +78,12 @@ class LinkInterface;
 class LinkManager;
 class InitialConnectStateMachine;
 class Autotune;
+
+#if defined(USSP_ENABLED)
+    class USSPVehicle;
+#endif
+
+
 
 #if defined(QGC_AIRMAP_ENABLED)
 class AirspaceVehicleManager;
@@ -1156,6 +1167,11 @@ private:
 #if defined(QGC_AIRMAP_ENABLED)
     AirspaceVehicleManager*         _airspaceVehicleManager         = nullptr;
 #endif
+
+#if defined(USSP_ENABLED)
+    USSPVehicle*                    _usspVehicle                    = nullptr;
+#endif
+    
 
     bool    _armed = false;         ///< true: vehicle is armed
     uint8_t _base_mode = 0;     ///< base_mode from HEARTBEAT

@@ -8,7 +8,7 @@
 ################################################################################
 
 QMAKE_PROJECT_DEPTH = 0 # undocumented qmake flag to force absolute paths in makefiles
-
+CONFIG += object_parallel_to_source
 # These are disabled until proven correct
 DEFINES += QGC_GST_TAISYNC_DISABLED
 DEFINES += QGC_GST_MICROHARD_DISABLED
@@ -750,7 +750,7 @@ HEADERS += \
     src/uas/UASInterface.h \
     src/uas/UASMessageHandler.h \
     src/AnalyzeView/GeoTagController.h \
-    src/AnalyzeView/ExifParser.h \
+    src/AnalyzeView/ExifParser.h \ 
 
 contains (DEFINES, QGC_ENABLE_PAIRING) {
     HEADERS += \
@@ -1431,7 +1431,7 @@ contains (DEFINES, QGC_AIRMAP_ENABLED) {
         src/Airmap/services/telemetry.cpp \
         src/Airmap/services/traffic.cpp \
         src/Airmap/services/types.cpp \
-
+        
     #-- Do we have an API key?
     exists(src/Airmap/Airmap_api_key.h) {
         message("Using compile time Airmap API key")
@@ -1445,13 +1445,37 @@ contains (DEFINES, QGC_AIRMAP_ENABLED) {
 } else {
     #-- Dummies
     INCLUDEPATH += \
-        src/Airmap/dummy
+        src/Airmap/dummy 
     RESOURCES += \
         src/Airmap/dummy/airmap_dummy.qrc
     HEADERS += \
         src/Airmap/dummy/AirspaceManager.h
     SOURCES += \
         src/Airmap/dummy/AirspaceManager.cc
+}
+
+contains (DEFINES, USSP_ENABLED) {
+
+    #-- To test with USSP Enabled Flag
+    INCLUDEPATH += \
+        src/USSP \
+        src/USSP/services \
+        src/USSP/flightBlender \
+        src/USSP/test
+
+    HEADERS += \
+        src/USSP/USSPManager.h \
+        src/USSP/USSPVehicle.h \
+        src/USSP/USSPTelemetry.h \
+        src/USSP/flightBlender/telemetry.h \
+        src/USSP/flightBlender/flightID.h \
+
+    SOURCES += \
+        src/USSP/USSPManager.cc \
+        src/USSP/USSPVehicle.cc \
+        src/USSP/USSPTelemetry.cc \
+        src/USSP/flightBlender/telemetry.cc \
+        src/USSP/flightBlender/flightID.cc \
 }
 
 #-------------------------------------------------------------------------------------
