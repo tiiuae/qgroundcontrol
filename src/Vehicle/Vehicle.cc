@@ -214,6 +214,13 @@ Vehicle::Vehicle(LinkInterface*             link,
     }
 #endif
 
+#if defined(USSP_ENABLED)
+    USSPManager* usspManager = _toolbox->usspManager();
+    if (usspManager) {
+        usspManager->instantiateVehicle(*this);
+    }
+#endif
+    
     _autopilotPlugin = _firmwarePlugin->autopilotPlugin(this);
     _autopilotPlugin->setParent(this);
 
@@ -507,6 +514,12 @@ Vehicle::~Vehicle()
         delete _airspaceVehicleManager;
     }
 #endif
+
+#if defined(USSP_ENABLED)
+    
+#endif
+
+
 }
 
 void Vehicle::prepareDelete()
