@@ -215,7 +215,6 @@ Vehicle::Vehicle(LinkInterface*             link,
 #endif
 
 #if defined(USSP_ENABLED)
-    //_usspFlow = new USSPMinimalFlow(*this);
     USSPManager* usspManager = _toolbox->usspManager();
     if (usspManager) {
         usspManager->instantiateVehicle(*this);
