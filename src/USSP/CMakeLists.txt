@@ -5,7 +5,11 @@ add_library(USSP
 	flightBlender/telemetry.h
 	flightBlender/telemetry.cc
 	flightBlender/flightID.h
-	flightBlender/flightID.cc
+        flightBlender/flightID.ccm
+        flightBlender/rest/client.h
+        flightBlender/rest/client.cc
+        flightBlender/rest/request.h
+        flightBlender/rest/request.cc
 	USSPManager.h
 	USSPManager.cc
 	USSPVehicle.h
