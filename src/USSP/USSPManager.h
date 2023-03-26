@@ -50,5 +50,5 @@ private:
     //bool                            connected                               () const override;
     //QString                         connectStatus                           () const override { return _connectStatus; }
     //AirspaceManager::AuthStatus     authStatus                              () const override { return _authStatus; }
-    Dispatcher _dispatcher; 
+    std::shared_ptr<Dispatcher> _dispatcher; 
 };

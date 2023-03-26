@@ -12,11 +12,14 @@
 
 
 //-----------------------------------------------------------------------------
-USSPTelemetry::USSPTelemetry(Dispatcher& dispatcher) : _dispatcher(dispatcher), _telemData()
+USSPTelemetry::USSPTelemetry(std::shared_ptr<Dispatcher> dispatcher) : 
+    _dispatcher(dispatcher), 
+    _telemData(),
+    _client()
 {
     qCInfo(USSPManagerLog) << " USSPTelemetry Constructor" ;
     _timerLastSent.start();
-    //counter = 0;
+    counter = 0;
 }
 
 void USSPTelemetry::passFlightDetails(json FlightDetailsJson)
@@ -27,7 +30,7 @@ void USSPTelemetry::passFlightDetails(json FlightDetailsJson)
 //-----------------------------------------------------------------------------
 void
 USSPTelemetry::vehicleMessageReceived(const mavlink_message_t& message)
-{
+{   
     switch (message.msgid) {
     case MAVLINK_MSG_ID_GLOBAL_POSITION_INT:
         _handleGlobalPositionInt(message);
@@ -67,35 +70,37 @@ USSPTelemetry::_handleGlobalPositionInt(const mavlink_message_t& message)
     _telemData.updateRidData(globalPosition,_lastHdop);
     _telemData.setupJson();
     json temp = _telemData.packJson();
-    // _response.clear();
+     
+    _dispatcher->add_task([temp,this]() {
 
-    // _dispatcher.add_task([temp,this]() {
+       counter ++;
+       _response = _client.RequestTelemetry(temp.dump(4));
 
-    //    std::cout << temp.dump() << std::endl;
-    //    std::cout << "____________________________________________________________________" << std::endl;
-    //    counter ++;
+    }); 
+    
+    
+    std::cout << _response << std::endl;
+    
+    
+       
+       if(!_response.empty()){
+            json responseJson = json::parse(_response);
+       
+            _response.clear();
+            if (responseJson.contains("message")){
+                    if(responseJson["message"] == "Telemetry data succesfully submitted"){
 
-    //    _response = "Hello";
+                        auto now = std::chrono::system_clock::now();
+                        std::time_t now_c = std::chrono::system_clock::to_time_t(now);
+                        char buffer[20];
+                        std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", std::localtime(&now_c));
 
-    // }); 
-    std::cout << temp.dump(4) << std::endl;
-    std::cout << "_________________________________________________________________________" << std::endl;
+                        std::cout << counter << " th Telem RID data submitted at " << buffer << std::endl;
+                        std::cout << "____________________________________________________________________" << std::endl;
 
-    //    json responseJson = json::parse(_response);
-
-    //    if (responseJson.contains("message"){
-    //         if(responseJson["message"] == ""){
-
-    //             auto now = std::chrono::system_clock::now();
-    //             std::time_t now_c = std::chrono::system_clock::to_time_t(now);
-    //             char buffer[20];
-    //             std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", std::localtime(&now_c));
-
-    //             std::cout << counter << " th Telem RID data submitted at " << buffer << std::endl;
-    //             std::cout << "____________________________________________________________________" << std::endl;
-
-    //         }
-    //    }
+                    }
+            }
+       }
        
 
 }

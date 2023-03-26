@@ -40,8 +40,8 @@ class Telemetry {
     double lat;                   ///< The latitude of the position [°].
     double lng;                   ///< The longitude of the position in [°].
     double alt;                   ///< The altitude above mean sea level of the position in [m].
-    double accuracy_h;            ///< The horizontal accuracy of the position in [m].
-    double accuracy_v; 
+    std::string accuracy_h;            ///< The horizontal accuracy of the position in [m].
+    std::string accuracy_v; 
     bool extrpolated;
     double pressure_altitude;
   };

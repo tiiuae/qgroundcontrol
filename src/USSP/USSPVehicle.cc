@@ -12,7 +12,7 @@
 
 ///TODO : Find a way to initialize Flight ID
 //-----------------------------------------------------------------------------
-USSPVehicle::USSPVehicle(Dispatcher& dispatcher,const Vehicle& vehicle) : 
+USSPVehicle::USSPVehicle(std::shared_ptr<Dispatcher> dispatcher,const Vehicle& vehicle) : 
     _telemetry(dispatcher),
     _dispatcher(dispatcher),
     _flightID()
@@ -21,16 +21,14 @@ USSPVehicle::USSPVehicle(Dispatcher& dispatcher,const Vehicle& vehicle) :
     connect(&vehicle, &Vehicle::mavlinkMessageReceived, this, &USSPVehicle::vehicleMavlinkMessageReceived);
     qCInfo(USSPManagerLog) << " USSPVehicle MAvlink msg slot connected" ;
     // TODO: Connect REverse Slots to see if it is possible
-
     _telemetry.passFlightDetails(_flightID.getJsonForTelem());
-    
 }
 
 
 //-----------------------------------------------------------------------------
 void
 USSPVehicle::vehicleMavlinkMessageReceived(const mavlink_message_t& message)
-{       
+{    
     _telemetry.vehicleMessageReceived(message);
 }
 

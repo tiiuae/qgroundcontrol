@@ -20,7 +20,7 @@ class USSPVehicle : public QObject
 {
     Q_OBJECT
 public:
-    USSPVehicle        (Dispatcher& dispatcher,const Vehicle& vehicle);
+    USSPVehicle        (std::shared_ptr<Dispatcher> dispatcher,const Vehicle& vehicle);
     ~USSPVehicle       () override = default;
 
     // void startTelemetryStream   () override;
@@ -44,6 +44,6 @@ private:
     //USSPFlightManager          _flightManager;
     USSPTelemetry                _telemetry;
     //USSPTrafficMonitor         _trafficMonitor;
-    Dispatcher&                  _dispatcher;
+    std::shared_ptr<Dispatcher>  _dispatcher;
     flightBlender::FlightID      _flightID;
 };
