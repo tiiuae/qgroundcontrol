@@ -22,6 +22,7 @@ public:
 
     void SendHttp(http::request<http::string_body>& request);
     std::string ReceiveHttpResponse();
+    http::request<http::string_body> CreateHttpRequest(std::string target, http::verb method, const std::string& body = "");
 
     std::string Get(std::string target, const std::string& body = "");
     std::string Post(std::string target, const std::string& body = "");

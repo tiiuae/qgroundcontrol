@@ -1469,6 +1469,8 @@ contains (DEFINES, USSP_ENABLED) {
         src/USSP/USSPTelemetry.h \
         src/USSP/flightBlender/telemetry.h \
         src/USSP/flightBlender/flightID.h \
+        src/USSP/flightBlender/rest/client.h \
+        src/USSP/flightBlender/rest/request.h \
 
     SOURCES += \
         src/USSP/USSPManager.cc \
@@ -1476,6 +1478,8 @@ contains (DEFINES, USSP_ENABLED) {
         src/USSP/USSPTelemetry.cc \
         src/USSP/flightBlender/telemetry.cc \
         src/USSP/flightBlender/flightID.cc \
+        src/USSP/flightBlender/rest/client.cc \
+        src/USSP/flightBlender/rest/request.cc \
 }
 
 #-------------------------------------------------------------------------------------

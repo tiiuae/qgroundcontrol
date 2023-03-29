@@ -13,7 +13,9 @@
 QGC_LOGGING_CATEGORY(USSPManagerLog, "USSPManagerLog")
 
 //-----------------------------------------------------------------------------
-USSPManager::USSPManager(QGCApplication* app, QGCToolbox* toolbox) : QGCTool(app, toolbox), _dispatcher()
+USSPManager::USSPManager(QGCApplication* app, QGCToolbox* toolbox) : 
+    QGCTool(app, toolbox), 
+    _dispatcher(std::make_shared<Dispatcher>())
 {
     qCInfo(USSPManagerLog) << " USSPManager Constructor" ;
 }

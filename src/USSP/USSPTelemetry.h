@@ -17,6 +17,7 @@
 #include <QDebug>
 #include <USSP/services/dispatcher.h>
 #include <USSP/flightBlender/telemetry.h>
+#include "USSP/flightBlender/rest/client.h"
 
 // TODO: Start & Stop Streaming
 // TODO: and Time start based on the same
@@ -25,7 +26,7 @@ class USSPTelemetry : public QObject
 {
     Q_OBJECT
 public:
-    USSPTelemetry                 (Dispatcher& dispatcher);
+    USSPTelemetry                 (std::shared_ptr<Dispatcher> dispatcher);
     ~USSPTelemetry        () = default;
 
     void passFlightDetails(json FlightDetailsJson);
@@ -52,6 +53,9 @@ private:
     QString                      _flightID;
     float                        _lastHdop = 1.f;
     QElapsedTimer                _timerLastSent;
-    Dispatcher&                  _dispatcher;
+    std::shared_ptr<Dispatcher>  _dispatcher;
     flightBlender::Telemetry     _telemData;
+    flightBlender::Client        _client;
+    int                          counter;
+    std::string                  _response;
 };

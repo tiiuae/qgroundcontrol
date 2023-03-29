@@ -23,14 +23,18 @@ class FlightID {
   struct FlightDetails
   {
     std::string   id;
+    std::string   serial_number;
     std::string   operator_id;
+    std::string   operation_description;
+    std::string   registration_number;
     double        operator_location_lng;
     double        operator_location_lat;
-    std::string   operation_description;
-    std::string   auth_data_format;
-    std::string   auth_data_data;
-    std::string   serial_number;
-    std::string   registration_number;
+    //std::string   auth_data_format;
+    //std::string   auth_data_data;
+    std::string   aircraft_type;
+    std::string   operator_name;
+    
+   
   };
   
   void initTestID();

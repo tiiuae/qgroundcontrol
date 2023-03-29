@@ -11,6 +11,9 @@ void flightBlender::Telemetry::initDefaultRIDdata()
 {
   ridData_ = {};
   ridData_.timestamp_accuracy = 0.0;
+  ridData_.position.accuracy_h = "HAUnkown";
+  ridData_.position.accuracy_v = "VAUnknown";
+  ridData_.position.extrpolated = false;
   ridData_.speed_accuracy = "SAUnknown";
   ridData_.height.reference = "GroundLevel";
 }  
@@ -29,7 +32,7 @@ void flightBlender::Telemetry::updateRidData(mavlink_global_position_int_t globa
   ridData_.position.lat        = static_cast<double>(globalPosition.lat / 1e7);
   ridData_.position.lng        = static_cast<double>(globalPosition.lon / 1e7);
   ridData_.position.alt        = static_cast<double>(globalPosition.alt) / 1000;
-  ridData_.position.accuracy_h = static_cast<double>(accuracy);
+  //ridData_.position.accuracy_h = static_cast<double>(accuracy);
 
   ridData_.track               = static_cast<double>(globalPosition.hdg);
 
@@ -53,8 +56,8 @@ void flightBlender::Telemetry::setupJson()
       ridDataJson_["position"]["lng"] = ridData_.position.lng;
       ridDataJson_["position"]["alt"] = ridData_.position.alt;
       ridDataJson_["position"]["accuracy_h"] = ridData_.position.accuracy_h;
-      //ridDataJson_["position"]["accuracy_v"] = ridData_.position.accuracy_v;
-      //ridDataJson_["position"]["extrpolated"] = ridData_.position.extrpolated;
+      ridDataJson_["position"]["accuracy_v"] = ridData_.position.accuracy_v;
+      ridDataJson_["position"]["extrapolated"] = ridData_.position.extrpolated;
       //ridDataJson_["position"]["pressure_altitude"] = ridData_.position.pressure_altitude;
       ridDataJson_["track"] = ridData_.track;
       ridDataJson_["speed"] = ridData_.speed;

@@ -1,5 +1,5 @@
 // TII LICENSE Inlusion
-#include "request.h"
+#include "USSP/flightBlender/rest/request.h"
 #include <fstream>
 #include <iostream>
 
@@ -20,7 +20,7 @@ void print(http::request<T>& request)
     oss.clear();
 }
 
-http::request<http::string_body> flightBlender::CreateHttpRequest(std::string target, http::verb method, const std::string& body = "")
+http::request<http::string_body> flightBlender::Request::CreateHttpRequest(std::string target, http::verb method, const std::string& body)
 {
     http::request<http::string_body> request;
 
@@ -63,7 +63,7 @@ void flightBlender::Request::SendHttp(http::request<http::string_body>& request)
     if( !socket_.is_open() )
         socket_.open(boost::asio::ip::tcp::v4());
 
-    print(request);
+    //print(request);
 
     // send HTTP request
     http::write(socket_, request);
