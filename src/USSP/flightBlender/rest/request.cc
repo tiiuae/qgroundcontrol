@@ -9,6 +9,13 @@ flightBlender::Request::Request() : socket_(ioservice_), resolver_(ioservice_)
     boost::asio::ip::tcp::resolver::iterator endpoint_iterator = resolver_.resolve(query);
 
     boost::asio::connect(socket_, endpoint_iterator);
+    initHttpRequest();
+}
+
+flightBlender::Request::~Request()
+{
+    socket_.close();
+    ioservice_.stop();
 }
 
 template<typename T>
@@ -20,45 +27,35 @@ void print(http::request<T>& request)
     oss.clear();
 }
 
-http::request<http::string_body> flightBlender::Request::CreateHttpRequest(std::string target, http::verb method, const std::string& body)
+void flightBlender::Request::initHttpRequest()
 {
-    http::request<http::string_body> request;
+    request_.set(http::field::content_length, 0);
 
-    request.target(target);
-    request.method(method);
+    request_.version(connection_params_.http_version);
+    request_.set(http::field::host, connection_params_.host);
 
-    if (body.size())
-    {
-        request.body() = body;
-        request.prepare_payload();
-        request.set(http::field::content_length, body.length());
-    }
+    request_.set(http::field::authorization, connection_params_.authorization_token);
+    request_.set(http::field::content_type, connection_params_.content_type);
 
-    request.version(11);
-    auto const host = "0.0.0.0:8000";
-    request.set(http::field::host, host);
-
-    request.set(http::field::authorization, "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJmbGlnaHRibGVuZGVyLnRpaS5hZSIsImNsaWVudF9pZCI6InVzc19ub2F1dGgiLCJleHAiOjE2NzgzNjM0NTgsImlzcyI6Ik5vQXV0aCIsImp0aSI6ImY0ODA4NGU4LTM1NmItNDdmNC05NDFmLTMyOGM2Y2U4YTNiZSIsIm5iZiI6MTY3ODM1OTg1Nywic2NvcGUiOiJibGVuZGVyLnJlYWQiLCJzdWIiOiJ1c3Nfbm9hdXRoIn0.T6J6YHPLrRBIlLSMzZ1Rl_RbZM_GspxWrfFt-hUrRGawL-n5K6r3B6oijzKaBm386vAzsYsqJKptOC82BSVnRHz1jCNmwO0KSVhmtoTC_Va1JWOx-WDoWiAd2Xu-SmqqOvtne5-NAgnfzkYHWw4BRpoC3ky3ZYIhORffioqow5U");
-    request.set(http::field::content_type, "application/json");
-
-    request.set(http::field::accept, "*/*");
-    request.set(http::field::accept_encoding, "gzip, deflate, br");
-    request.set(http::field::connection, "keep-alive");
-
-    return request;
+    request_.set(http::field::accept, connection_params_.accept);
+    request_.set(http::field::accept_encoding, connection_params_.accept_encoding);
+    request_.set(http::field::connection, connection_params_.connection);
 }
 
-std::string flightBlender::Request::ReceiveHttpResponse()
+std::string flightBlender::Request::receiveHttpResponse()
 {
     beast::flat_buffer buffer;
     http::response<http::dynamic_body> response;
-    response.version(11);
+    response.version(connection_params_.http_version);
     http::read(socket_, buffer, response);
+
+    if (response.body().size() == 0)
+        return "";
 
     return boost::beast::buffers_to_string(response.body().data());
 }
 
-void flightBlender::Request::SendHttp(http::request<http::string_body>& request)
+void flightBlender::Request::sendHttp(http::request<http::string_body>& request)
 {
     if( !socket_.is_open() )
         socket_.open(boost::asio::ip::tcp::v4());
@@ -66,29 +63,46 @@ void flightBlender::Request::SendHttp(http::request<http::string_body>& request)
     //print(request);
 
     // send HTTP request
-    http::write(socket_, request);
+    std::lock_guard<std::mutex> lock_guard(mutex_);
+    http::write(socket_, request_);
 }
 
-std::string flightBlender::Request::Get(std::string target, const std::string& body)
+std::string flightBlender::Request::get(std::string target)
 {
-    auto request = CreateHttpRequest(target, http::verb::get, body);
-    SendHttp(request);
+    request_.target(target);
+    request_.method(http::verb::get);
 
-    return ReceiveHttpResponse();
+    sendHttp(request_);
+
+    return receiveHttpResponse();
 }
 
-std::string flightBlender::Request::Post(std::string target, const std::string& body)
+std::string flightBlender::Request::post(std::string target)
 {
-    auto request = CreateHttpRequest(target, http::verb::post, body);
-    SendHttp(request);
+    request_.target(target);
+    request_.method(http::verb::post);
 
-    return ReceiveHttpResponse();
+    sendHttp(request_);
+
+    return receiveHttpResponse();
 }
 
-std::string flightBlender::Request::Put(std::string target, const std::string& body)
+std::string flightBlender::Request::put(std::string target)
 {
-    auto request = CreateHttpRequest(target, http::verb::put, body);
-    SendHttp(request);
+    request_.target(target);
+    request_.method(http::verb::put);
 
-    return ReceiveHttpResponse();
+    sendHttp(request_);
+
+    return receiveHttpResponse();
+}
+
+void flightBlender::Request::setBody(const std::string& body)
+{
+    if (body.empty())
+        return;
+
+    request_.body() = body;
+    request_.prepare_payload();
+    request_.set(http::field::content_length, body.length());
 }

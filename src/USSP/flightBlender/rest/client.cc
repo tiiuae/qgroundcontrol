@@ -8,15 +8,18 @@ flightBlender::Client::Client()
 
 std::string flightBlender::Client::SetFlightPlan(const std::string& body)
 {
-    return request_.Post("/flight_declaration_ops/set_flight_declaration", body);
+    request_.setBody(body);
+    return request_.post("/flight_declaration_ops/set_flight_declaration");
 }
 
 std::string flightBlender::Client::RequestTelemetry(const std::string& body)
 {
-    return request_.Put("/flight_stream/set_telemetry", body);
+    request_.setBody(body);
+    return request_.put("/flight_stream/set_telemetry");
 }
 
 std::string flightBlender::Client::Ping()
 {
-    return request_.Get("/ping");
+    request_.setBody("");
+    return request_.get("/ping");
 }
