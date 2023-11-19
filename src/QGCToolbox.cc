@@ -45,6 +45,10 @@
 #include CUSTOMHEADER
 #endif
 
+#ifdef CONFIG_UTM_ADAPTER
+#include "UTMSPManager.h"
+#endif
+
 QGCToolbox::QGCToolbox(QGCApplication* app)
 {
     // SettingsManager must be first so settings are available to any subsequent tools
@@ -79,6 +83,22 @@ QGCToolbox::QGCToolbox(QGCApplication* app)
 #if defined(QGC_GST_MICROHARD_ENABLED)
     _microhardManager       = new MicrohardManager          (app, this);
 #endif
+#ifdef CONFIG_UTM_ADAPTER
+    _utmspManager            = new UTMSPManager               (app, this);
+#endif
+}
+
+/**
+  * @brief Helper function to register a type with QML that is not creatable from QML
+  * @param uri The URI to register the type under
+  * @param majorVersion The major version of the type
+  * @param minorVersion The minor version of the type
+  * @param qmlName The name of the type in QML
+  */
+template<class T>
+void registerUncreatableQmlType(const char *uri, int majorVersion, int minorVersion, const char *qmlName)
+{
+    qmlRegisterUncreatableType<T>(uri, majorVersion, minorVersion, qmlName, "Reference only");
 }
 
 void QGCToolbox::setChildToolboxes(void)
@@ -114,6 +134,9 @@ void QGCToolbox::setChildToolboxes(void)
 #endif
 #if defined(QGC_ENABLE_PAIRING)
     _pairingManager->setToolbox(this);
+#endif
+#ifdef CONFIG_UTM_ADAPTER
+    _utmspManager->setToolbox(this);
 #endif
 }
 
