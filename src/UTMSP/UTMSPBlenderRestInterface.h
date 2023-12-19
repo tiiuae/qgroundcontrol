@@ -22,4 +22,8 @@ public:
 
 private:
     http::request<http::string_body> _request;
+    std::string fpRequestUrl_;  // Flight Plan request URL
+    std::string nrIdRequestUrl_;  // Network Remote ID request URL
+
+    void initialize();  // Initialization function to parse product.json
 };

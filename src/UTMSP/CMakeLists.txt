@@ -2,6 +2,8 @@ find_package(Threads REQUIRED)
 
 add_library(UTMSP
         UTMSPLogger.h
+        UTMSPProductJson.h
+        UTMSPProductJson.cpp
         UTMSPRestInterface.h
         UTMSPRestInterface.cpp
         UTMSPBlenderRestInterface.h

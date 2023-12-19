@@ -1465,6 +1465,7 @@ contains (DEFINES, CONFIG_UTM_ADAPTER) {
 
     HEADERS += \
         src/UTMSP/UTMSPLogger.h \
+        src/UTMSP/UTMSPProductJson.h \
         src/UTMSP/UTMSPRestInterface.h \
         src/UTMSP/UTMSPBlenderRestInterface.h \
         src/UTMSP/UTMSPAuthorization.h \
@@ -1478,6 +1479,7 @@ contains (DEFINES, CONFIG_UTM_ADAPTER) {
         src/UTMSP/UTMSPManager.h
 
     SOURCES += \
+        src/UTMSP/UTMSPProductJson.cpp \
         src/UTMSP/UTMSPRestInterface.cpp \
         src/UTMSP/UTMSPBlenderRestInterface.cpp \
         src/UTMSP/UTMSPAuthorization.cpp \
