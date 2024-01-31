@@ -1,4 +1,6 @@
-
+# if(CONFIG_UTM_ADAPTER)
+#     add_definitions(-DCONFIG_UTM_ADAPTER)
+# endif()
 add_subdirectory(Actuators)
 
 set(EXTRA_SRC)

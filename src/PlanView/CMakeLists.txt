@@ -1,3 +1,6 @@
+if(CONFIG_UTM_ADAPTER)
+    add_definitions(-DCONFIG_UTM_ADAPTER)
+endif()
 add_custom_target(PlanViewQml
 	SOURCES
 		CameraCalcCamera.qml
