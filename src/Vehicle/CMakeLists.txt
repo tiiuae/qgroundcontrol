@@ -1,3 +1,7 @@
+if(QGC_CONFIG_UTM_ADAPTER)
+    add_definitions(-DQGC_CONFIG_UTM_ADAPTER)
+endif()
+
 add_subdirectory(Actuators)
 
 find_package(Qt6 REQUIRED COMPONENTS Core)

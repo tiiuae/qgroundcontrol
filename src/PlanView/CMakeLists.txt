@@ -1,5 +1,9 @@
 find_package(Qt6 REQUIRED COMPONENTS Core Qml)
 
+if(QGC_CONFIG_UTM_ADAPTER)
+    add_definitions(-DQGC_CONFIG_UTM_ADAPTER)
+endif()
+
 add_custom_target(PlanViewQml
 	SOURCES
 		CameraCalcCamera.qml
