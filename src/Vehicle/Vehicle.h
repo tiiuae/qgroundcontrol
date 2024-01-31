@@ -52,7 +52,7 @@
 #include "VehicleGeneratorFactGroup.h"
 #include "VehicleEFIFactGroup.h"
 
-#ifdef CONFIG_UTM_ADAPTER
+#ifdef QGC_CONFIG_UTM_ADAPTER
 #include "UTMSPVehicle.h"
 #include "UTMSPManager.h"
 #endif
@@ -82,7 +82,7 @@ class LinkManager;
 class InitialConnectStateMachine;
 class Autotune;
 class RemoteIDManager;
-#ifdef CONFIG_UTM_ADAPTER
+#ifdef QGC_CONFIG_UTM_ADAPTER
 class UTMSPVehicle;
 #endif
 
@@ -1239,7 +1239,7 @@ private:
     VehicleObjectAvoidance*         _objectAvoidance                = nullptr;
     Autotune*                       _autotune                       = nullptr;
 
-#ifdef CONFIG_UTM_ADAPTER
+#ifdef QGC_CONFIG_UTM_ADAPTER
     UTMSPVehicle*                    _utmspVehicle                    = nullptr;
 #endif
 

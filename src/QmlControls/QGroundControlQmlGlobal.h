@@ -22,7 +22,7 @@
 #else
 class AirLinkManager;
 #endif
-#ifdef CONFIG_UTM_ADAPTER
+#ifdef QGC_CONFIG_UTM_ADAPTER
 #include "UTMSPManager.h"
 #endif
 
@@ -111,7 +111,7 @@ public:
 
     Q_PROPERTY(bool              utmspSupported           READ    utmspSupported              CONSTANT)
 
-#ifdef CONFIG_UTM_ADAPTER
+#ifdef QGC_CONFIG_UTM_ADAPTER
     Q_PROPERTY(UTMSPManager*     utmspManager             READ    utmspManager                CONSTANT)
 #endif
 
@@ -173,7 +173,7 @@ public:
     bool                    airlinkSupported    () { return false; }
 #endif
 
-#ifdef CONFIG_UTM_ADAPTER
+#ifdef QGC_CONFIG_UTM_ADAPTER
     UTMSPManager*            utmspManager         ()  {return _utmspManager;}
 #endif
 
@@ -220,7 +220,7 @@ public:
 
     QString qgcVersion              (void) const;
 
-#ifdef CONFIG_UTM_ADAPTER
+#ifdef QGC_CONFIG_UTM_ADAPTER
     bool    utmspSupported() { return true; }
 #else
     bool    utmspSupported() { return false; }
@@ -254,7 +254,7 @@ private:
     ADSBVehicleManager*     _adsbVehicleManager     = nullptr;
     QGCPalette*             _globalPalette          = nullptr;
     QmlUnitsConversion      _unitsConversion;
-#ifdef CONFIG_UTM_ADAPTER
+#ifdef QGC_CONFIG_UTM_ADAPTER
     UTMSPManager*            _utmspManager;
 #endif
 
