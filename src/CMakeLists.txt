@@ -18,6 +18,15 @@ qt_add_library(QGC STATIC
 	QGCToolbox.h
 )
 
+#######################################################
+#             UTMSP FLAG
+#######################################################
+if(QGC_CONFIG_UTM_ADAPTER)
+    add_definitions(-DQGC_CONFIG_UTM_ADAPTER)
+endif()
+
+set_source_files_properties(QGCApplication.cc PROPERTIES COMPILE_DEFINITIONS APP_VERSION_STR="${APP_VERSION_STR}")
+
 add_subdirectory(ADSB)
 add_subdirectory(AirLink)
 add_subdirectory(AnalyzeView)

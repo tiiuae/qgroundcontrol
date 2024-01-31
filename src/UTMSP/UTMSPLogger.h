@@ -9,8 +9,8 @@
 
 #pragma once
 
-#if defined (CONFIG_UTM_ADAPTER)
-#include <QtCore/QDebug>
+#if defined (QGC_CONFIG_UTM_ADAPTER)
+#include <QDebug>
 
 inline QDebug operator<<(QDebug debug, const std::string &s) {
     return debug << QString::fromStdString(s);

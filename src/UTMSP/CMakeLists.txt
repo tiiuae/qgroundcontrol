@@ -1,7 +1,11 @@
 find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(Threads REQUIRED)
+find_package(Boost REQUIRED COMPONENTS system thread)
+find_package(OpenSSL REQUIRED)
 
 set(UTMSP_RESOURCES)
 qt_add_library(UTMSP STATIC)
+option(QGC_CONFIG_UTM_ADAPTER "Enable UTM Adapter" OFF) # TODO: Make this QGC_CONFIG_UTM_ADAPTER
 
 option(QGC_UTM_ADAPTER "Enable UTM Adapter" OFF)
 if(QGC_UTM_ADAPTER)
