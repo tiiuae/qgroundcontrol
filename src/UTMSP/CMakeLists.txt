@@ -1,21 +1,15 @@
-find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Core Network)
 find_package(Threads REQUIRED)
-find_package(Boost REQUIRED COMPONENTS system thread)
-find_package(OpenSSL REQUIRED)
 
 qt_add_library(UTMSP STATIC)
-option(QGC_CONFIG_UTM_ADAPTER "Enable UTM Adapter" OFF) # TODO: Make this QGC_CONFIG_UTM_ADAPTER
+option(QGC_CONFIG_UTM_ADAPTER "Enable UTM Adapter" OFF)
 
     if(QGC_CONFIG_UTM_ADAPTER)
         add_definitions(-DQGC_CONFIG_UTM_ADAPTER)
         add_definitions(-DQT_DEBUG)
 
         set(CMAKE_BUILD_TYPE Debug)
-        # set(QGC_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../)
-        # set(NLOHMANN_JSON_SOURCE_DIR "${QGC_ROOT_DIR}/libs/libevents/libevents/libs/cpp/parse/nlohmann_json")
-        # set(NLOHMANN_JSON_BINARY_DIR "${CMAKE_BINARY_DIR}/nlohmann_json")
 
-        # add_subdirectory(${NLOHMANN_JSON_SOURCE_DIR} ${NLOHMANN_JSON_BINARY_DIR})
         message(STATUS "UTMSP is Initialized")
 
         target_sources(UTMSP
@@ -55,21 +49,15 @@ option(QGC_CONFIG_UTM_ADAPTER "Enable UTM Adapter" OFF) # TODO: Make this QGC_CO
     target_include_directories(UTMSP
         PUBLIC
         services
-        # ${QGC_ROOT_DIR}/libs/libevents/libevents/libs/cpp/parse/nlohmann_json/include
     )
 
     target_link_libraries(UTMSP
 
-        PRIVATE
-        libevents_parser
         PUBLIC
-        Boost::system
-        Boost::thread
-        OpenSSL::SSL
-        OpenSSL::Crypto
         nlohmann_json::nlohmann_json
         Qt6::Core
         Qt6::Location
+        Qt6::Network
         Qt6::Widgets
         Threads::Threads
         qgc
@@ -88,9 +76,6 @@ else()
     )
 
     target_link_libraries(UTMSP
-
-        PRIVATE
-        libevents_parser
         PUBLIC
         Qt6::Core
         Qt6::Location
