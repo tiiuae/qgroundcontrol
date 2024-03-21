@@ -634,7 +634,7 @@ void GeoFenceController::loadFlightPlanData()
 
     emit polygonBoundarySent(geoCoordinates);
 }
-bool GeoFenceController::loadUploadFlag()
+bool GeoFenceController::loadUploadFlag()  // Remove IT Later
 {
     emit uploadFlagSent(true);
 
