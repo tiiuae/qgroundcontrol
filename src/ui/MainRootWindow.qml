@@ -30,9 +30,6 @@ ApplicationWindow {
     minimumHeight:  ScreenTools.isMobile ? ScreenTools.screenHeight : Math.min(ScreenTools.defaultFontPixelWidth * 50, Screen.height)
     visible:        true
 
-    property string _startTimeStamp
-    property bool   _showVisible
-    property string _flightID
     property bool   _utmspSendActTrigger
     property bool   _utmspStartTelemetry
 
@@ -255,14 +252,6 @@ ApplicationWindow {
         anchors.fill:   parent
         enabled:                !toolDrawer.visible //The DragHandler in FlightMap.qml needs to be disabled when the toolDrawer is open, otherwise touch signals bleed through the pages
         visible:        false
-
-        onActivationParamsSent:{
-            if(_utmspEnabled){
-                _startTimeStamp = startTime
-                _showVisible = activate
-                _flightID = flightID
-            }
-        }
     }
 
     footer: LogReplayStatusBar {
@@ -839,9 +828,9 @@ ApplicationWindow {
 
     UTMSPActivationStatusBar{
          id:                         activationbar
-         activationStartTimestamp:  _startTimeStamp
-         activationApproval:        _showVisible && QGroundControl.utmspManager.utmspVehicle.vehicleActivation
-         flightID:                  _flightID
-         anchors.fill:              parent
+         activationStartTimestamp:   UTMSPStateStorage.startTimeStamp
+         activationApproval:         UTMSPStateStorage.showActivationTab && QGroundControl.utmspManager.utmspVehicle.vehicleActivation
+         flightID:                   UTMSPStateStorage.flightID
+         anchors.fill:               parent
     }
 }
