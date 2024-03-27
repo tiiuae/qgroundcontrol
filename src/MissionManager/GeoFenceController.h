@@ -64,7 +64,6 @@ public:
 
 #ifdef QGC_CONFIG_UTM_ADAPTER
     Q_INVOKABLE void loadFlightPlanData(void);
-    Q_INVOKABLE bool loadUploadFlag(void);
 #endif
 
     double  paramCircularFence  (void);
