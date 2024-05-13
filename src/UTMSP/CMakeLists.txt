@@ -1,9 +1,6 @@
 find_package(Qt6 REQUIRED COMPONENTS Core Network)
-find_package(Threads REQUIRED)
-find_package(Boost REQUIRED COMPONENTS system thread)
-find_package(OpenSSL REQUIRED)
 
-set(UTMSP_RESOURCES)
+# set(UTMSP_RESOURCES)
 qt_add_library(UTMSP STATIC)
 option(QGC_CONFIG_UTM_ADAPTER "Enable UTM Adapter" OFF)
 
@@ -54,7 +51,6 @@ if(QGC_UTM_ADAPTER)
 
     target_link_libraries(UTMSP
         PRIVATE
-            boost_system
             nlohmann_json
             Threads::Threads
             Qt6::Network

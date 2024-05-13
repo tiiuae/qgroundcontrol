@@ -42,6 +42,7 @@
 #include "VehicleSetpointFactGroup.h"
 #include "VehicleTemperatureFactGroup.h"
 #include "VehicleVibrationFactGroup.h"
+#include "VehicleWindFactGroup.h"
 #ifdef QGC_CONFIG_UTM_ADAPTER
 #include "UTMSPVehicle.h"
 #include "UTMSPManager.h"
