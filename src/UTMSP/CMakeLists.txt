@@ -1,11 +1,11 @@
 find_package(Qt6 REQUIRED COMPONENTS Core Network)
 
-# set(UTMSP_RESOURCES)
+set(UTMSP_RESOURCES)
 qt_add_library(UTMSP STATIC)
 option(QGC_CONFIG_UTM_ADAPTER "Enable UTM Adapter" OFF)
 
-option(QGC_UTM_ADAPTER "Enable UTM Adapter" OFF)
-if(QGC_UTM_ADAPTER)
+option(QGC_CONFIG_UTM_ADAPTER "Enable UTM Adapter" OFF)
+if(QGC_CONFIG_UTM_ADAPTER)
     message(STATUS "UTMSP is Initialized")
 
     if(NOT nlohmann_json_FOUND)
